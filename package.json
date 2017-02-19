@@ -1,0 +1,17 @@
+{
+  "name": "web1",
+  "version": "1.0.0",
+  "description": "Premir site avec js full stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "javascipt",
+    "express",
+    "mongodb",
+    "Angular"
+  ],
+  "author": "JLT",
+  "license": "MIT"
+}
