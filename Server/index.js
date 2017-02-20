@@ -1,12 +1,69 @@
+const fs = require("fs");
 const path = require("path");
+const rfs = require("rotating-file-stream");
+
 const express = require("express");
-const session = require('express-session');
+const morgan = require("morgan");
+const favicon = require("serve-favicon");
+const compression = require('compression');
+const session = require("express-session");
 const login_rtr = require("./route/login_rtr");
 
 const app = express();
 
+function pad(num) {
+  return (num > 9 ? "" : "0") + num;
+}
+
+
+function generator(time, index) {
+  console.log(arguments);
+
+  if (!time)
+    time = new Date();
+
+  if (!index)
+    index = 1;
+
+  // return path.join(__dirname, "/log/access.log");
+
+  console.log(time);
+  var month = time.getFullYear() + "" + pad(time.getMonth() + 1);
+  var day = pad(time.getDate());
+  var hour = pad(time.getHours());
+  var minute = pad(time.getMinutes());
+
+  console.log(__dirname + "/log/" + month + day + "/access-" + hour + minute + "-" + index + ".log");
+  return __dirname + "/log/" + month + day + "/access-" + hour + minute + "-" + index + ".log";
+}
+
+
+// create a rotating write stream
+var accessLogStream = rfs(generator, {
+
+  rotationTime: true,
+  interval: "15m",
+  size: "10M",
+  compress: true
+});
+
+//console.dir(accessLogStream);
+
+// setup the logger
+app.use(morgan("combined", {
+  stream: accessLogStream
+}));
+
+// favicon
+app.use(favicon(__dirname + "/images/favicon.ico"));
+
+// compression
+app.use(compression());
+
+
+// session
 app.use(session({
-  secret: '2C44-4D44-WppQ38S',
+  secret: "2C44-4D44-WppQ38S",
   resave: true,
   saveUninitialized: true
 }));

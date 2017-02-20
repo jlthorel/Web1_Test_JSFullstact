@@ -13,11 +13,19 @@
     "mongodb",
     "Angular"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jlthorel/web1_test_jsfullstact.git"
+  },
   "author": "JLT",
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
+    "compression": "^1.6.2",
     "express": "^4.14.1",
-    "express-session": "^1.15.1"
+    "express-session": "^1.15.1",
+    "morgan": "^1.8.1",
+    "rotating-file-stream": "^1.1.9",
+    "serve-favicon": "^2.4.0"
   }
 }
